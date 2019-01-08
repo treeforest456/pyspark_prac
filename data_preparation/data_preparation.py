@@ -1,4 +1,4 @@
-from pyspark.ml.feature import MinMaxScaler
+from pyspark.ml.feature import MinMaxScaler, StandardScaler
 from pyspark.ml.linalg import Vectors
 
 features_df = spark.createDataFrame([
@@ -16,3 +16,13 @@ sfeatures_df = smodel.transform(features_df)
 sfeatures_df.take(1)
 
 sfeatures_df.select('features', 'sfeatures').show()
+
+
+feature_stand_scaler = StandardScaler(inputCol='features',\
+										outputCol='sfeatures',\
+										withStd=True,\
+										withMean=True)
+stand_smodel = feature_stand_scaler.fit(features_df)
+stand_sfeatures_df = stand_smodel.transform(features_df)
+stand_sfeatures_df.take(1)
+stand_sfeatures_df.show()
