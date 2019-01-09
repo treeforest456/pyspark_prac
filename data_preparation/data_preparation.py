@@ -39,3 +39,19 @@ b_df.show()
 bucketizer = Bucketizer(splits=splits, inputCol='features', outputCol='bfeatures')
 bucketed_df = bucketizer.transform(b_df)
 bucketed_df.show()
+
+
+
+from pyspark.ml.feature import Tokenizer
+sentences_df = spark.createDataFrame([
+	(1, 'This is an introduction to Spark MLlib'),
+	(2, 'Mllib includes libraries for classification and regression'),
+	(3, 'It also contains supporting tools for pipelines')],
+	['id', 'sentences'])
+
+sentences_df.show()
+
+sent_token = Tokenizer(inputCol='sentence', outputCol='words')
+sent_tokenized_df = sent_token.transform(sentences_df)
+
+sent_tokenized_df.show()
