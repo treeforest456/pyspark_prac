@@ -55,3 +55,18 @@ sent_token = Tokenizer(inputCol='sentence', outputCol='words')
 sent_tokenized_df = sent_token.transform(sentences_df)
 
 sent_tokenized_df.show()
+
+from pyspark.ml.feature import HashingTF, IDF
+sentences_df.take(1)
+sent_tokenized_df.take(1)
+
+hashingTF = HashingTF(inputCol='words', outputCol='rawFeatures', numFeatures=20)
+sent_hfTF_df = hashingTF.transform(sent_tokenized_df)
+
+sent_hfTF_df.take(1)
+
+idf = IDF(inputCol='rawFeatures', outputCol='idf_features')
+idfModel = idf.fit(sent_hfTF_df)
+tfidf_df = idfModel.transform(sent_hfTF_df)
+
+tfidf_df.take(1)
