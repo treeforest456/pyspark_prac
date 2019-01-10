@@ -43,3 +43,14 @@ dt_predictions = dt_model.transform(test_df)
 dt_evaluator = RegressionEvaluator(labelCol='PE', predictionCol='prediction', metricName='rmse')
 rmse = dt_evaluator.evaluate(dt_predictions)
 
+
+# gradient-booted tree regression
+from pyspark.ml.regression import GBTRegressor
+gbt = GBTRegressor(featuresCol='features', labelCol='PE')
+gbt_model = gbt.fit(train_df)
+gbt_predictions = gbt_model.transform(test_df)
+gbt_evaluator = RegressionEvaluator(labelCol='PE', predictionCol='prediction', metricName='rmse')
+gbt_rmse = gbt_evaluator.evaluate(gbt_predictions)
+gbt_rmse
+
+
